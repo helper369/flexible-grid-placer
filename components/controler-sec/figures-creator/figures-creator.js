@@ -40,28 +40,28 @@ let figuresCreator = Object.assign({}, figuresCreatorUnassigned, {
         //Process to make the connections between the two points and transfer
         else if (this.resetCount === 2 && !hover) {
             //Groups rows and columns values in arrays
-            let splitter = this.utils.splitter([this.stack[0].row, this.stack[1].row], [this.stack[0].column, this.stack[1].column])
+            let groupValues = this.utils.groupValues([this.stack[0].row, this.stack[1].row], [this.stack[0].column, this.stack[1].column])
             //Cleans the mirror for entering the new shape
             this.element.innerHTML = "";
             //Transfer the height length
-            transferShape.row = Math.max(...splitter.rows) - Math.min(...splitter.rows);
+            transferShape.row = Math.max(...groupValues.rows) - Math.min(...groupValues.rows);
             //Transfer the width length
-            transferShape.column = Math.max(...splitter.columns) - Math.min(...splitter.columns);
+            transferShape.column = Math.max(...groupValues.columns) - Math.min(...groupValues.columns);
             //Enable the transferation
             transferShape.flag = true;
         } 
         //Process to show the shape while hovering
         else if(hover && this.resetCount === 1) {
             //Groups shadow rows and columns values in arrays
-            let splitter = this.utils.splitter([shadowStack[0].row, shadowStack[1].row], [shadowStack[0].column, shadowStack[1].column])
+            let groupValues = this.utils.groupValues([shadowStack[0].row, shadowStack[1].row], [shadowStack[0].column, shadowStack[1].column])
             //Removes last shadow
             this.utils.removeElement("#last-shadow-fc");
             //Creates new shadow
             let shadowElement = document.createElement("div");
             shadowElement.id = "last-shadow-fc";
-            this.utils.applyGridStyles(shadowElement, "splitter", splitter);
+            this.utils.applyGridStyles(shadowElement, "groupValues", groupValues);
             //Shadow rows and columns
-            this.utils.showCoordinates(shadowElement, splitter);
+            this.utils.showCoordinates(shadowElement, groupValues);
             //Show the shadow
             this.element.appendChild(shadowElement);
         }  
